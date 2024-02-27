@@ -10,6 +10,13 @@ npm-debug.*
 *.orig.*
 web-build/
 
+
+.env
+
+
+# expo build
+_active.uusver
+
 # macOS
 .DS_Store
 

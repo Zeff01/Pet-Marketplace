@@ -8,9 +8,9 @@
     "android": "cross-env APP_ENV=prod npx expo start --android",
     "ios": "cross-env APP_ENV=prod npx expo start --ios",
     "web": "cross-env APP_ENV=prod npx expo start --web",
-    "format": "node_modules/.bin/prettier --config .prettierrc src/**/*.{ts,tsx} --write",
-    "lint": "node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx",
-    "test": "node_modules/.bin/jest --verbose --passWithNoTests",
+    "format": "npx prettier src/**/*.{ts,tsx} --write",    
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "test": "npx jest --verbose --passWithNoTests",    
     "prepare": "husky install"
   },
   "dependencies": {
