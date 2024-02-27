@@ -12,6 +12,7 @@
       "@utils/*": ["./src/utils/*"],
       "@theme": ["./src/theme/index.ts"],
       "@modules/*": ["./src/modules/*"],
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
     }
   }
 }
