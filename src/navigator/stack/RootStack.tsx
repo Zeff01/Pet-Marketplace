@@ -1,19 +1,21 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 
 import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import { RootStackParamList } from './Stack.typeDefs';
 
 import { COLORS } from '@theme';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
 export default function RootStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        header: () => (
+        header: props => (
           <SafeAreaView
             style={{
               padding: 10,
@@ -30,6 +32,7 @@ export default function RootStackNavigator() {
                 justifyContent: 'center',
               }}>
               <TextInput
+                onFocus={() => props.navigation.navigate('Search')}
                 placeholder="search"
                 placeholderTextColor={COLORS['Dark Mode'].foreground}
                 style={{
@@ -51,16 +54,28 @@ export default function RootStackNavigator() {
                 style={{ position: 'absolute', left: 5, pointerEvents: 'none' }}
               />
             </View>
-            <AntDesign name="pluscircle" size={28} color={COLORS['Dark Mode'].foreground} />
-            <Ionicons
-              name="chatbubble-ellipses-sharp"
-              size={28}
-              color={COLORS['Dark Mode'].foreground}
-            />
+            <TouchableOpacity>
+              <AntDesign name="pluscircle" size={28} color={COLORS['Dark Mode'].foreground} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Messages')}>
+              <Ionicons
+                name="chatbubble-ellipses-sharp"
+                size={28}
+                color={COLORS['Dark Mode'].foreground}
+              />
+            </TouchableOpacity>
           </SafeAreaView>
         ),
       }}>
       <Stack.Screen name="Default" component={TopTabNavigator} />
+
+      {/* TODO: replace this with real screens */}
+      <Stack.Screen name="Search" component={TempPage} />
+      <Stack.Screen name="Messages" component={TempPage} />
     </Stack.Navigator>
   );
+}
+
+function TempPage() {
+  return <></>;
 }
