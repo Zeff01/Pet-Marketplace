@@ -1,6 +1,7 @@
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Image } from 'react-native';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { COLORS } from '@theme';
+import { PostFeeds } from '@utils/models/PostFeed';
 
 type PostProps = {
   displayName: string;
@@ -9,7 +10,15 @@ type PostProps = {
   likes: number;
   shares: number;
 };
-export default function Post({ displayName, userName, postMessage, likes, shares }: PostProps) {
+
+export default function Post({
+  caption,
+  displayName,
+  heart_count,
+  main_photo,
+  share_count,
+  user_name,
+}: PostFeeds) {
   return (
     <View style={{ backgroundColor: COLORS['Dark Mode'].background, marginBottom: 15 }}>
       <View>
@@ -27,23 +36,30 @@ export default function Post({ displayName, userName, postMessage, likes, shares
             <Text style={{ color: COLORS['Dark Mode'].foreground, fontSize: 16 }}>
               {displayName}
             </Text>
-            <Text style={{ color: COLORS['Dark Mode'].foreground, fontSize: 12 }}>@{userName}</Text>
+            <Text style={{ color: COLORS['Dark Mode'].foreground, fontSize: 12 }}>
+              @{user_name}
+            </Text>
           </View>
           <View style={{ marginLeft: 'auto' }}>
             <Entypo name="dots-three-vertical" size={24} color={COLORS['Dark Mode'].foreground} />
           </View>
         </View>
       </View>
+
       {/* placeholder for post image */}
       <View
         style={{
           height: 200,
           width: '100%',
+          alignItems: 'center',
           backgroundColor: COLORS['Dark Mode'].foreground,
-        }}></View>
+        }}>
+        <Image source={{ uri: main_photo }} style={{ width: 200, height: 200 }} />
+      </View>
+
       <View>
         <View style={{ padding: 5, paddingBottom: 40 }}>
-          <Text style={{ color: COLORS['Dark Mode'].foreground }}>{postMessage}</Text>
+          <Text style={{ color: COLORS['Dark Mode'].foreground }}>{caption}</Text>
         </View>
         <View
           style={{
@@ -70,11 +86,11 @@ export default function Post({ displayName, userName, postMessage, likes, shares
           />
           <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}>
             <AntDesign name="heart" size={26} color={COLORS['Dark Mode'].foreground} />
-            <Text style={{ color: COLORS['Dark Mode'].foreground }}>{likes}</Text>
+            <Text style={{ color: COLORS['Dark Mode'].foreground }}>{heart_count}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}>
             <Entypo name="share" size={26} color={COLORS['Dark Mode'].foreground} />
-            <Text style={{ color: COLORS['Dark Mode'].foreground }}>{shares}</Text>
+            <Text style={{ color: COLORS['Dark Mode'].foreground }}>{share_count}</Text>
           </View>
         </View>
       </View>
