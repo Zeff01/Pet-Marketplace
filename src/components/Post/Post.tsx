@@ -40,7 +40,8 @@ export default function Post({ displayName, userName, postMessage, likes, shares
           height: 200,
           width: '100%',
           backgroundColor: COLORS['Dark Mode'].foreground,
-        }}></View>
+        }}
+      />
       <View>
         <View style={{ padding: 5, paddingBottom: 40 }}>
           <Text style={{ color: COLORS['Dark Mode'].foreground }}>{postMessage}</Text>
