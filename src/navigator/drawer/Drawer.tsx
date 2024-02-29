@@ -1,10 +1,10 @@
 import React from 'react';
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import TabNavigator from '../tab/Tab';
 import { DrawerParamList } from './Drawer.typeDefs';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
+import RootStackNavigator from '@navigator/stack/RootStack';
 
 const styles = StyleSheet.create({
   root: {
@@ -30,7 +30,7 @@ function DrawerNavigator() {
       initialRouteName="MainDrawer"
       screenOptions={{ headerShown: false }}
       drawerContent={drawerContents}>
-      <Drawer.Screen name="MainDrawer" component={TabNavigator} />
+      <Drawer.Screen name="FrontPage" component={RootStackNavigator} />
     </Drawer.Navigator>
   );
 }
