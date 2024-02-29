@@ -2,9 +2,9 @@ import React from 'react';
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerParamList } from './Drawer.typeDefs';
+import RootStackNavigator from '@navigator/stack/RootStack';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
-import RootStackNavigator from '@navigator/stack/RootStack';
 
 const styles = StyleSheet.create({
   root: {

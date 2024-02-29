@@ -14,7 +14,7 @@ export default function Button({
   imageStyle,
   ...rest
 }: IButton & ButtonProps) {
-  const opacityStyle = { opacity: disabled ? 0.6 : 1 };
+  // const opacityStyle = { opacity: disabled ? 0.6 : 1 };
   return (
     <Pressable
       style={({ pressed }) => [{ opacity: pressed || disabled ? 0.6 : 1 }, style]}
