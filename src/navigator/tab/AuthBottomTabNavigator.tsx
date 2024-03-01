@@ -13,6 +13,7 @@ export default function AuthBottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarIconStyle: {
           display: 'none',
         },
