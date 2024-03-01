@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
+
 import { View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import { RootStackParamList } from './Stack.typeDefs';
 
+import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
 import { COLORS } from '@theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

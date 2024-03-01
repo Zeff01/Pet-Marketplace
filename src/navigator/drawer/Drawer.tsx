@@ -5,6 +5,7 @@ import { DrawerParamList } from './Drawer.typeDefs';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 import RootStackNavigator from '@navigator/stack/RootStack';
+import AuthBottomTabNavigator from '@navigator/tab/AuthBottomTabNavigator';
 
 const styles = StyleSheet.create({
   root: {
@@ -26,11 +27,10 @@ const drawerContents = () => (
 
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator
-      initialRouteName="MainDrawer"
-      screenOptions={{ headerShown: false }}
-      drawerContent={drawerContents}>
+    <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={drawerContents}>
+      <Drawer.Screen name="Auth" component={AuthBottomTabNavigator} />
       <Drawer.Screen name="FrontPage" component={RootStackNavigator} />
+      {/* temporary placement */}
     </Drawer.Navigator>
   );
 }
