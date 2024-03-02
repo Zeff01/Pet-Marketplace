@@ -7,45 +7,50 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import Input from '@components/Input';
 
 import { COLORS } from '@theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { z } from 'zod';
-import { SetStateAction, useState, Dispatch, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
+import { reducer, initialValue } from './formStates';
+import { ActionType } from './formState.types';
+
+import {
+  nameSchema,
+  emailSchema,
+  phoneSchema,
+  passwordLengthSchema,
+  passwordLowerSchema,
+  passwordNumberSchema,
+  passwordUpperSchema,
+  validateInput,
+} from './validationSchema';
 
 const dimension = Dimensions.get('screen');
-
-// TODO: moved into another file
-const nameSchema = z.string().min(6);
-const emailSchema = z.string().email();
-const phoneSchema = z.string().min(10); //TODO: regex validation???
-const passwordLengthSchema = z.string().min(6);
-const hasUpperCaseRegex = /[A-Z]/;
-const hasLowerCaseRegex = /[a-z]/;
-const hasNumberRegex = /\d/;
-const passwordUpperSchema = z.string().regex(hasUpperCaseRegex);
-const passwordLowerSchema = z.string().regex(hasLowerCaseRegex);
-const passwordNumberSchema = z.string().regex(hasNumberRegex);
 
 export default function Signup() {
   // NOTE: this is cancer code, replace later use a form library or useReducer
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [nameValid, setNameValid] = useState(false);
-  const [emailValid, setEmailValid] = useState(false);
-  const [phoneValid, setPhoneValid] = useState(false);
-  const [passLenValid, setPassLenValid] = useState(false);
-  const [passUpperValid, setPassUpperValid] = useState(false);
-  const [passLowerValid, setPassLowerValid] = useState(false);
-  const [passNumValid, setPassNumValid] = useState(false);
-  const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
-  const [formValid, setFormValid] = useState(false);
+  const [
+    {
+      name,
+      email,
+      phone,
+      password,
+      confirmPassword,
+      nameValid,
+      emailValid,
+      phoneValid,
+      passLenValid,
+      passLowerValid,
+      passNumValid,
+      passUpperValid,
+      confirmPasswordValid,
+      formValid,
+    },
+    dispatch,
+  ] = useReducer(reducer, initialValue);
 
   // TODO: integrate firebase  login
   async function loginUser() {
@@ -57,41 +62,28 @@ export default function Signup() {
     );
   }
 
-  function validateInput(
-    schema: z.ZodString,
-    value: string,
-    setter: Dispatch<SetStateAction<boolean>>,
-  ) {
-    try {
-      schema.parse(value);
-      setter(true); // valid  input
-    } catch (error) {
-      console.error(error);
-      setter(false); // invalid input
-    }
-  }
-
   useEffect(() => {
-    validateInput(nameSchema, name, setNameValid);
+    validateInput(nameSchema, name, dispatch, ActionType.checkName);
   }, [name]);
   useEffect(() => {
-    validateInput(emailSchema, email, setEmailValid);
+    validateInput(emailSchema, email, dispatch, ActionType.checkEmail);
   }, [email]);
   useEffect(() => {
-    validateInput(phoneSchema, phone, setPhoneValid);
+    validateInput(phoneSchema, phone, dispatch, ActionType.checkPhone);
   }, [phone]);
   useEffect(() => {
-    validateInput(passwordLengthSchema, password, setPassLenValid);
-    validateInput(passwordUpperSchema, password, setPassUpperValid);
-    validateInput(passwordLowerSchema, password, setPassLowerValid);
-    validateInput(passwordNumberSchema, password, setPassNumValid);
+    validateInput(passwordLengthSchema, password, dispatch, ActionType.checkPassLen);
+    validateInput(passwordUpperSchema, password, dispatch, ActionType.checkPassUpper);
+    validateInput(passwordLowerSchema, password, dispatch, ActionType.checkPassLower);
+    validateInput(passwordNumberSchema, password, dispatch, ActionType.checkPassNum);
   }, [password]);
   useEffect(() => {
-    setConfirmPasswordValid(password === confirmPassword && confirmPassword.length > 0);
+    const passwordMatched = password === confirmPassword;
+    dispatch({ type: ActionType.checkConfirmPass, payload: passwordMatched });
   }, [confirmPassword]);
 
   useEffect(() => {
-    setFormValid(
+    const isFormValid = Boolean(
       nameValid &&
         emailValid &&
         phoneValid &&
@@ -101,6 +93,7 @@ export default function Signup() {
         passLowerValid &&
         passNumValid,
     );
+    dispatch({ type: ActionType.checkForm, payload: isFormValid });
   }, [
     nameValid,
     emailValid,
@@ -127,7 +120,7 @@ export default function Signup() {
         <View style={{ alignItems: 'center', justifyContent: 'center', rowGap: 15 }}>
           <View style={{ rowGap: 5 }}>
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>Name</Text>
-            <TextInput
+            {/* <TextInput
               editable={!loading}
               value={name}
               onChangeText={setName}
@@ -143,118 +136,91 @@ export default function Signup() {
                 color: COLORS['Dark Mode'].foreground,
                 opacity: loading ? 0.5 : 1,
               }}
+            /> */}
+            <Input
+              loading={loading}
+              value={name}
+              onChangeText={e => dispatch({ type: ActionType.changeName, payload: e })}
+              placeholder="firstname lastname"
             />
             <Text
               style={{
-                color: '#FF8080',
-                opacity: name && !nameValid ? 1 : 0,
+                color: nameValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                opacity: name ? 1 : 0,
               }}>
               name length minimum 6 required
             </Text>
           </View>
           <View style={{ rowGap: 5 }}>
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>Email</Text>
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={email}
-              onChangeText={setEmail}
+              onChangeText={e => dispatch({ type: ActionType.changeEmail, payload: e })}
               placeholder="user@email.com"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
             />
             <Text
               style={{
-                color: '#FF8080',
-                opacity: email && !emailValid ? 1 : 0,
+                color: emailValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                opacity: email ? 1 : 0,
               }}>
-              email is not valid
+              must be a valid email
             </Text>
           </View>
           <View style={{ rowGap: 5 }}>
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>
               User phone no:
             </Text>
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={phone}
-              onChangeText={setPhone}
+              onChangeText={e => dispatch({ type: ActionType.changePhone, payload: e })}
               placeholder="phone number"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
               keyboardType="phone-pad"
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
             />
             <Text
               style={{
-                color: '#FF8080',
-                opacity: phone && !phoneValid ? 1 : 0,
+                color: phoneValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                opacity: phone ? 1 : 0,
               }}>
-              phone number is invalid
+              must be a valid phone number
             </Text>
           </View>
           <View style={{ rowGap: 5 }}>
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>Password</Text>
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={password}
-              onChangeText={setPassword}
-              secureTextEntry
+              onChangeText={e => dispatch({ type: ActionType.changePassword, payload: e })}
               placeholder="password"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
+              secureTextEntry
             />
             <View>
               <Text
                 style={{
-                  color: '#FF8080',
-                  opacity: password && !passLenValid ? 1 : 0,
+                  color: passLenValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                  opacity: password ? 1 : 0,
                 }}>
                 length must be atleast 6
               </Text>
               <Text
                 style={{
-                  color: '#FF8080',
-                  opacity: password && !passUpperValid ? 1 : 0,
+                  color: passUpperValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                  opacity: password ? 1 : 0,
                 }}>
                 must have atleast one uppercase letter
               </Text>
               <Text
                 style={{
-                  color: '#FF8080',
-                  opacity: password && !passLowerValid ? 1 : 0,
+                  color: passLowerValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                  opacity: password ? 1 : 0,
                 }}>
                 must have atleast one lowercase letter
               </Text>
               <Text
                 style={{
-                  color: '#FF8080',
-                  opacity: password && !passNumValid ? 1 : 0,
+                  color: passNumValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                  opacity: password ? 1 : 0,
                 }}>
                 must have atleast one number
               </Text>
@@ -264,28 +230,17 @@ export default function Signup() {
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>
               Confirm Password
             </Text>
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
+              onChangeText={e => dispatch({ type: ActionType.changeConfirmPassword, payload: e })}
               placeholder="confirm password"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
+              secureTextEntry
             />
             <Text
               style={{
-                color: '#FF8080',
-                opacity: confirmPassword && !confirmPasswordValid ? 1 : 0,
+                color: confirmPasswordValid ? COLORS['Dark Mode'].secondary : '#FF8080',
+                opacity: confirmPassword ? 1 : 0,
               }}>
               password does not match
             </Text>

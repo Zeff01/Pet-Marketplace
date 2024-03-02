@@ -1,10 +1,11 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import Input from '@components/Input';
 
 import { COLORS } from '@theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // TODO: use form  library?
 export default function Login() {
@@ -38,45 +39,22 @@ export default function Login() {
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>
               user phone number
             </Text>
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={user}
               onChangeText={setUser}
               keyboardType="phone-pad"
               placeholder="phone number"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
             />
           </View>
           <View style={{ rowGap: 5 }}>
             <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>password</Text>
-            {/* TODO: reused into  custom  component */}
-            <TextInput
-              editable={!loading}
+            <Input
+              loading={loading}
               value={password}
               onChangeText={setPassword}
               secureTextEntry
               placeholder="password"
-              placeholderTextColor={COLORS['Dark Mode']['muted-foreground']}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderWidth: 2,
-                borderColor: COLORS['Dark Mode'].accent,
-                width: 250,
-                borderRadius: 8,
-                color: COLORS['Dark Mode'].foreground,
-                opacity: loading ? 0.5 : 1,
-              }}
             />
           </View>
           {/* TODO: make into  a reusable compoenent */}
