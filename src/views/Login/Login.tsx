@@ -1,6 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import Input from '@components/Input';
 
 import { COLORS } from '@theme';
