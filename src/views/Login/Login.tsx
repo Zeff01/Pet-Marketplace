@@ -2,13 +2,14 @@ import { Text, View, TouchableOpacity, ActivityIndicator, Dimensions } from 'rea
 import { Image } from 'expo-image';
 import Input from '@components/Input';
 
-import { COLORS } from '@theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
+import { useGlobalTheme } from '../../providers/ThemeProvider';
 
 // TODO: use form  library?
 export default function Login() {
   const dimension = Dimensions.get('screen');
+  const { colors } = useGlobalTheme();
 
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +29,7 @@ export default function Login() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: COLORS['Dark Mode'].background }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <View
           style={{ height: dimension.height / 2, alignItems: 'center', justifyContent: 'center' }}>
           <Image
@@ -39,15 +40,13 @@ export default function Login() {
               aspectRatio: 1 / 1,
             }}
           />
-          <Text style={{ fontSize: 40, fontWeight: 'bold', color: COLORS['Dark Mode'].foreground }}>
+          <Text style={{ fontSize: 40, fontWeight: 'bold', color: colors.foreground }}>
             Sell - Le - Pet
           </Text>
         </View>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', rowGap: 15 }}>
           <View style={{ rowGap: 5 }}>
-            <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>
-              user phone number
-            </Text>
+            <Text style={{ fontSize: 16, color: colors.foreground }}>user phone number</Text>
             <Input
               loading={loading}
               value={user}
@@ -57,7 +56,7 @@ export default function Login() {
             />
           </View>
           <View style={{ rowGap: 5 }}>
-            <Text style={{ fontSize: 16, color: COLORS['Dark Mode'].foreground }}>password</Text>
+            <Text style={{ fontSize: 16, color: colors.foreground }}>password</Text>
             <Input
               loading={loading}
               value={password}
@@ -74,7 +73,7 @@ export default function Login() {
               alignItems: 'center',
               justifyContent: 'center',
               width: 250,
-              backgroundColor: COLORS['Dark Mode'].primary,
+              backgroundColor: colors.primary,
               paddingVertical: 4,
               borderRadius: 10,
               opacity: submitDisabled ? 0.5 : 1,
@@ -82,11 +81,11 @@ export default function Login() {
             }}
             onPress={loginUser}>
             {loading ? (
-              <ActivityIndicator animating={true} color={COLORS['Dark Mode'].secondary} />
+              <ActivityIndicator animating={true} color={colors.secondary} />
             ) : (
               <Text
                 style={{
-                  color: COLORS['Dark Mode'].foreground,
+                  color: colors.foreground,
                   fontSize: 16,
                   textAlign: 'center',
                 }}>

@@ -2,7 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Entypo, Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 import Main from '@views/Main';
-import { COLORS } from '@theme';
+import { useGlobalTheme } from '../../providers/ThemeProvider';
 const TopTab = createMaterialTopTabNavigator();
 
 /**
@@ -14,11 +14,13 @@ function TemperoryComponent() {
 }
 
 export default function TopTabNavigator() {
+  const { colors } = useGlobalTheme();
+
   return (
     <TopTab.Navigator
       screenOptions={{
         tabBarContentContainerStyle: {
-          backgroundColor: COLORS['Dark Mode'].background,
+          backgroundColor: colors.background,
           //TODO: figure out how to add border here
         },
       }}>
@@ -27,9 +29,7 @@ export default function TopTabNavigator() {
         component={Main}
         options={{
           tabBarIcon: props => {
-            const iconColor = props.focused
-              ? COLORS['Dark Mode'].primary
-              : COLORS['Dark Mode'].foreground;
+            const iconColor = props.focused ? colors.primary : colors.foreground;
             return <FontAwesome name="paw" size={24} color={iconColor} />;
           },
           tabBarShowLabel: false,
@@ -40,9 +40,7 @@ export default function TopTabNavigator() {
         component={TemperoryComponent}
         options={{
           tabBarIcon: props => {
-            const iconColor = props.focused
-              ? COLORS['Dark Mode'].primary
-              : COLORS['Dark Mode'].foreground;
+            const iconColor = props.focused ? colors.primary : colors.foreground;
             return <Entypo name="shop" size={24} color={iconColor} />;
           },
           tabBarShowLabel: false,
@@ -53,9 +51,7 @@ export default function TopTabNavigator() {
         component={TemperoryComponent}
         options={{
           tabBarIcon: props => {
-            const iconColor = props.focused
-              ? COLORS['Dark Mode'].primary
-              : COLORS['Dark Mode'].foreground;
+            const iconColor = props.focused ? colors.primary : colors.foreground;
             return <FontAwesome name="paw" size={24} color={iconColor} />;
           }, // TODO: add the plus symbol
           tabBarShowLabel: false,
@@ -66,9 +62,7 @@ export default function TopTabNavigator() {
         component={TemperoryComponent}
         options={{
           tabBarIcon: props => {
-            const iconColor = props.focused
-              ? COLORS['Dark Mode'].primary
-              : COLORS['Dark Mode'].foreground;
+            const iconColor = props.focused ? colors.primary : colors.foreground;
             return <Ionicons name="notifications-outline" size={24} color={iconColor} />;
           },
           tabBarShowLabel: false,
@@ -79,9 +73,7 @@ export default function TopTabNavigator() {
         component={TemperoryComponent}
         options={{
           tabBarIcon: props => {
-            const iconColor = props.focused
-              ? COLORS['Dark Mode'].primary
-              : COLORS['Dark Mode'].foreground;
+            const iconColor = props.focused ? colors.primary : colors.foreground;
             return <FontAwesome5 name="user-alt" size={24} color={iconColor} />;
           },
           tabBarShowLabel: false,

@@ -1,5 +1,5 @@
 import { TextStyle, StyleSheet, ColorValue, TextInputProps, TextInput } from 'react-native';
-import { COLORS } from '@theme';
+import { useGlobalTheme } from '../../providers/ThemeProvider';
 
 type InputProps = {
   loading?: boolean; // makes input uneditable and adjust opacity
@@ -10,17 +10,19 @@ type InputProps = {
 export default function Input({
   loading = false,
   style = {},
-  placeHolderTextColor = COLORS['Dark Mode']['muted-foreground'],
+  placeHolderTextColor,
   ...props
 }: InputProps) {
+  const { colors } = useGlobalTheme();
+
   const styles = StyleSheet.compose(style, {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: COLORS['Dark Mode'].accent,
+    borderColor: colors.accent,
     width: 250,
     borderRadius: 8,
-    color: COLORS['Dark Mode'].foreground,
+    color: colors.foreground,
     opacity: loading ? 0.5 : 1,
   });
 
@@ -28,7 +30,7 @@ export default function Input({
     <TextInput
       editable={!loading}
       style={styles}
-      placeholderTextColor={placeHolderTextColor}
+      placeholderTextColor={placeHolderTextColor ?? colors['muted-foreground']}
       {...props}
     />
   );

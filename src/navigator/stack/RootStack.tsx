@@ -8,11 +8,13 @@ import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import { RootStackParamList } from './Stack.typeDefs';
 
 import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
-import { COLORS } from '@theme';
+import { useGlobalTheme } from 'src/providers/ThemeProvider';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStackNavigator() {
+  const { colors } = useGlobalTheme();
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -22,7 +24,7 @@ export default function RootStackNavigator() {
               padding: 10,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              backgroundColor: COLORS['Dark Mode'].background,
+              backgroundColor: colors.background,
               alignItems: 'center',
             }}>
             <View
@@ -35,7 +37,7 @@ export default function RootStackNavigator() {
               <TextInput
                 onFocus={() => props.navigation.navigate('Search')}
                 placeholder="search"
-                placeholderTextColor={COLORS['Dark Mode'].foreground}
+                placeholderTextColor={colors.foreground}
                 style={{
                   width: '100%',
                   padding: 5,
@@ -43,27 +45,23 @@ export default function RootStackNavigator() {
                   fontSize: 16,
                   borderWidth: 2,
                   borderRadius: 12,
-                  borderColor: COLORS['Dark Mode'].muted,
-                  color: COLORS['Dark Mode'].foreground,
+                  borderColor: colors.muted,
+                  color: colors.foreground,
                   fontWeight: '600',
                 }}
               />
               <Feather
                 name="search"
                 size={22}
-                color={COLORS['Dark Mode'].foreground}
+                color={colors.foreground}
                 style={{ position: 'absolute', left: 5, pointerEvents: 'none' }}
               />
             </View>
             <TouchableOpacity>
-              <AntDesign name="pluscircle" size={28} color={COLORS['Dark Mode'].foreground} />
+              <AntDesign name="pluscircle" size={28} color={colors.foreground} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate('Messages')}>
-              <Ionicons
-                name="chatbubble-ellipses-sharp"
-                size={28}
-                color={COLORS['Dark Mode'].foreground}
-              />
+              <Ionicons name="chatbubble-ellipses-sharp" size={28} color={colors.foreground} />
             </TouchableOpacity>
           </SafeAreaView>
         ),

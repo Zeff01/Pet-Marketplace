@@ -4,11 +4,13 @@ import { View, Text } from 'react-native';
 
 import Login from '@views/Login';
 import Signup from '@views/Signup';
-import { COLORS } from '@theme';
+import { useGlobalTheme } from '../../providers/ThemeProvider';
 
 const Tab = createBottomTabNavigator<AuthTabParamList>();
 
 export default function AuthBottomTabNavigator() {
+  const { colors } = useGlobalTheme();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -31,11 +33,9 @@ export default function AuthBottomTabNavigator() {
                   height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: props.focused
-                    ? COLORS['Dark Mode'].primary
-                    : COLORS['Dark Mode'].card,
+                  backgroundColor: props.focused ? colors.primary : colors.card,
                 }}>
-                <Text style={{ color: COLORS['Dark Mode'].foreground }}>Login</Text>
+                <Text style={{ color: colors.foreground }}>Login</Text>
               </View>
             );
           },
@@ -54,11 +54,9 @@ export default function AuthBottomTabNavigator() {
                   height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: props.focused
-                    ? COLORS['Dark Mode'].primary
-                    : COLORS['Dark Mode'].card,
+                  backgroundColor: props.focused ? colors.primary : colors.card,
                 }}>
-                <Text style={{ color: COLORS['Dark Mode'].foreground }}>SignUp</Text>
+                <Text style={{ color: colors.foreground }}>SignUp</Text>
               </View>
             );
           },
