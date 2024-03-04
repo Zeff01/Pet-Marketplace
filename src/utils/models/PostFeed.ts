@@ -3,6 +3,7 @@ import { type Timestamp } from 'firebase/firestore';
 export type DocId = string;
 
 export interface PostFeeds {
+  id: string;
   caption?: string;
   displayName?: string;
   comment_count: number;

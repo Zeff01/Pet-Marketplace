@@ -1,5 +1,5 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { Image } from 'expo-image';
 import Input from '@components/Input';
 
 import { COLORS } from '@theme';
@@ -8,6 +8,8 @@ import { useState } from 'react';
 
 // TODO: use form  library?
 export default function Login() {
+  const dimension = Dimensions.get('screen');
+
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,8 +29,16 @@ export default function Login() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: COLORS['Dark Mode'].background }}>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <MaterialCommunityIcons name="dog" size={200} color={COLORS['Dark Mode'].foreground} />
+        <View
+          style={{ height: dimension.height / 2, alignItems: 'center', justifyContent: 'center' }}>
+          <Image
+            source={require('../../../assets/images/pet-logo.png')}
+            placeholder={'pet logo'}
+            style={{
+              height: 200,
+              aspectRatio: 1 / 1,
+            }}
+          />
           <Text style={{ fontSize: 40, fontWeight: 'bold', color: COLORS['Dark Mode'].foreground }}>
             Sell - Le - Pet
           </Text>

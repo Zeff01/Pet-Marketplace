@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Text,
   View,
@@ -7,6 +6,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import { Image } from 'expo-image';
 import Input from '@components/Input';
 
 import { COLORS } from '@theme';
@@ -26,9 +26,8 @@ import {
   validateInput,
 } from './validationSchema';
 
-const dimension = Dimensions.get('screen');
-
 export default function Signup() {
+  const dimension = Dimensions.get('screen');
   // NOTE: this is cancer code, replace later use a form library or useReducer
   const [loading, setLoading] = useState(false);
 
@@ -112,7 +111,14 @@ export default function Signup() {
       <ScrollView style={{ backgroundColor: COLORS['Dark Mode'].background }}>
         <View
           style={{ height: dimension.height / 2, alignItems: 'center', justifyContent: 'center' }}>
-          <MaterialCommunityIcons name="dog" size={200} color={COLORS['Dark Mode'].foreground} />
+          <Image
+            source={require('../../../assets/images/pet-logo.png')}
+            placeholder={'pet logo'}
+            style={{
+              height: 200,
+              aspectRatio: 1 / 1,
+            }}
+          />
           <Text style={{ fontSize: 40, fontWeight: 'bold', color: COLORS['Dark Mode'].foreground }}>
             Sell - Le - Pet
           </Text>
