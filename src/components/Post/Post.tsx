@@ -1,15 +1,9 @@
-import { View, Text, TextInput, Image } from 'react-native';
+import { View, Text, TextInput, Image, Pressable } from 'react-native';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { PostFeeds } from '@utils/models/PostFeed';
 import { useGlobalTheme } from '../../providers/ThemeProvider';
-
-type PostProps = {
-  displayName: string;
-  userName: string;
-  postMessage: string;
-  likes: number;
-  shares: number;
-};
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '@navigator';
 
 export default function Post({
   caption,
@@ -18,8 +12,10 @@ export default function Post({
   main_photo,
   share_count,
   user_name,
+  id,
 }: PostFeeds) {
   const { colors } = useGlobalTheme();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <View style={{ backgroundColor: colors.background, marginBottom: 15 }}>
@@ -45,15 +41,16 @@ export default function Post({
       </View>
 
       {/* placeholder for post image */}
-      <View
+      <Pressable
         style={{
           height: 200,
           width: '100%',
           alignItems: 'center',
           backgroundColor: colors.foreground,
-        }}>
+        }}
+        onPress={() => navigation.navigate('PetProfile', { id })}>
         <Image source={{ uri: main_photo }} style={{ width: 200, height: 200 }} />
-      </View>
+      </Pressable>
 
       <View>
         <View style={{ padding: 5, paddingBottom: 40 }}>
