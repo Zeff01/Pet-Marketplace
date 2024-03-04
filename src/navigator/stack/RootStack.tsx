@@ -8,7 +8,7 @@ import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import { RootStackParamList } from './Stack.typeDefs';
 
 import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
-import { useGlobalTheme } from 'src/providers/ThemeProvider';
+import { useGlobalTheme } from '../../providers/ThemeProvider';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
