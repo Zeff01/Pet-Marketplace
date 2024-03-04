@@ -11,6 +11,7 @@ import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
 import PetProfile from '@views/PetProfile';
 import { useGlobalTheme } from '../../providers/ThemeProvider';
 import { useNavigation } from '@react-navigation/native';
+import Input from '@components/Input';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -80,7 +81,39 @@ export default function RootStackNavigator() {
       />
 
       {/* TODO: replace this with real screens */}
-      <Stack.Screen name="Search" component={TempPage} />
+      <Stack.Screen
+        name="Search"
+        component={TempPage}
+        options={{
+          headerLeft: props => {
+            return (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (props.canGoBack) {
+                      navigation.goBack();
+                    }
+                  }}
+                  style={{ paddingRight: 10 }}>
+                  <AntDesign name="back" size={28} color={colors.foreground} />
+                </TouchableOpacity>
+              </>
+            );
+          },
+          headerRight: props => {
+            return <Ionicons name="filter" size={28} color={colors.foreground} />;
+          },
+          headerTitle: props => {
+            return (
+              <Input
+                style={{ paddingVertical: 5, borderColor: colors.muted }}
+                placeholder="search"
+              />
+            );
+          },
+          headerBackVisible: false,
+        }}
+      />
       <Stack.Screen name="Messages" component={TempPage} />
       <Stack.Screen
         name="PetProfile"
