@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { View, TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -9,6 +9,7 @@ import { RootStackParamList } from './Stack.typeDefs';
 
 import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
 import PetProfile from '@views/PetProfile';
+import Search from '@views/Search';
 import { useGlobalTheme } from '../../providers/ThemeProvider';
 import { useNavigation } from '@react-navigation/native';
 import Input from '@components/Input';
@@ -25,6 +26,7 @@ export default function RootStackNavigator() {
         headerStyle: {
           backgroundColor: colors['card-inner'],
         },
+        headerTintColor: colors.foreground,
       }}>
       <Stack.Screen
         name="Default"
@@ -83,7 +85,7 @@ export default function RootStackNavigator() {
       {/* TODO: replace this with real screens */}
       <Stack.Screen
         name="Search"
-        component={TempPage}
+        component={Search}
         options={{
           headerLeft: props => {
             return (
@@ -100,20 +102,28 @@ export default function RootStackNavigator() {
               </>
             );
           },
-          headerRight: props => {
-            return <Ionicons name="filter" size={28} color={colors.foreground} />;
+          headerRight: () => {
+            // non interactive placeholder
+            return (
+              <View style={{ position: 'relative' }}>
+                <TouchableOpacity>
+                  <Ionicons name="filter" size={28} color={colors.foreground} />
+                </TouchableOpacity>
+              </View>
+            );
           },
-          headerTitle: props => {
+          headerTitle: () => {
+            // non interactive placeholder
             return (
               <Input
                 style={{ paddingVertical: 5, borderColor: colors.muted }}
                 placeholder="search"
+                autoFocus={true}
               />
             );
           },
           headerBackVisible: false,
-        }}
-      />
+        }}></Stack.Screen>
       <Stack.Screen name="Messages" component={TempPage} />
       <Stack.Screen
         name="PetProfile"
