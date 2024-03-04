@@ -25,7 +25,7 @@ export const PostFeedProvider: React.FC<PostFeedProviderProps> = ({ children }) 
     const unsubscribe = onSnapshot(collection(firebaseDb, 'post'), querySnapshot => {
       const fetchedPostFeeds: PostFeeds[] = [];
       querySnapshot.forEach(doc => {
-        fetchedPostFeeds.push({ ...doc.data() } as PostFeeds);
+        fetchedPostFeeds.push({ ...doc.data(), id: doc.id } as PostFeeds);
       });
       setPostFeeds(fetchedPostFeeds);
     });

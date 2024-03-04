@@ -13,3 +13,8 @@ export type TabParamList = {
 };
 
 export type TabProps = BottomTabScreenProps<TabParamList, keyof TabParamList>;
+
+export type AuthTabParamList = {
+  Login: undefined;
+  Signup: undefined;
+};

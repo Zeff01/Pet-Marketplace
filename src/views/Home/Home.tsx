@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import Button from '@components/Button';
-import { StackProps } from '@navigator/stack';
 import { colors } from '@theme';
 import { PostFeedContext } from '../../providers/PostFeedsProvider';
 
