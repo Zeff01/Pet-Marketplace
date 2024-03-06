@@ -102,7 +102,8 @@ export default function Signup() {
         passLenValid &&
         passUpperValid &&
         passLowerValid &&
-        passNumValid,
+        passNumValid &&
+        password === confirmPassword,
     );
     dispatch({ type: ActionType.checkForm, payload: isFormValid });
   }, [
