@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import { create } from 'zustand';
 
 export type UserData = {
@@ -7,6 +8,7 @@ export type UserData = {
   phone: string;
   pets: string[];
   items: string[];
+  created_at: Timestamp;
 } | null;
 
 type State = {

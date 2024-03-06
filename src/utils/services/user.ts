@@ -16,6 +16,7 @@ export type UserDocumentData = {
   phone: string;
   pets: string[];
   items: string[];
+  created_at: Timestamp;
   error?: string;
 };
 
