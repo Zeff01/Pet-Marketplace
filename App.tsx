@@ -6,7 +6,9 @@ import store from '@utils/store';
 import { loadImages, loadFonts } from '@theme';
 import 'react-native-gesture-handler';
 import { PostFeedProvider } from './src/providers/PostFeedsProvider';
+import { AuthenticatedUserProvider } from './src/providers';
 import { ThemeProvider } from './src/providers/ThemeProvider';
+
 
 // keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -30,12 +32,15 @@ export default function App() {
 
   if (!isReady) return null;
   return (
-    <PostFeedProvider>
-      <Provider store={store}>
-        <ThemeProvider>
-          <Navigator />
-        </ThemeProvider>
-      </Provider>
-    </PostFeedProvider>
+    <AuthenticatedUserProvider>
+
+      <PostFeedProvider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <Navigator />
+          </ThemeProvider>
+        </Provider>
+      </PostFeedProvider>
+    </AuthenticatedUserProvider>
   );
 }

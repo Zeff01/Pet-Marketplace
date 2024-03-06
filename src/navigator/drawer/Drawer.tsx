@@ -8,24 +8,42 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 import AuthBottomTabNavigator from '@navigator/tab/AuthBottomTabNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useUserData } from '../../hooks/useUserData';
+import { UserMethods } from '@utils/services/user';
 
 const drawerContents = ({ navigation }: DrawerContentComponentProps) => {
+  // eslint-disable-next-line
+  const { userData } = useUserData();
+
   return (
     <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-      <TouchableOpacity
-        style={{ padding: 10, borderWidth: 1, borderColor: 'black' }}
-        onPress={() => {
-          navigation.navigate('Auth');
-        }}>
-        <Text>auth</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ padding: 10, borderWidth: 1, borderColor: 'black' }}
-        onPress={() => {
-          navigation.navigate('FrontPage');
-        }}>
-        <Text>home</Text>
-      </TouchableOpacity>
+      {userData ? (
+        <>
+          <Text>welcome back {userData.name}</Text>
+          <TouchableOpacity
+            style={{ padding: 10, borderWidth: 1, borderColor: 'black' }}
+            onPress={UserMethods.logout}>
+            <Text>logout</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <TouchableOpacity
+            style={{ padding: 10, borderWidth: 1, borderColor: 'black' }}
+            onPress={() => {
+              navigation.navigate('Auth');
+            }}>
+            <Text>auth</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ padding: 10, borderWidth: 1, borderColor: 'black' }}
+            onPress={() => {
+              navigation.navigate('FrontPage');
+            }}>
+            <Text>home</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </SafeAreaView>
   );
 };
