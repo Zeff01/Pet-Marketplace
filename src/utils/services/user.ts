@@ -1,6 +1,6 @@
 import { firebaseAuth, firebaseDb } from '../../config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { collection, query, where, getDoc, getDocs, addDoc } from 'firebase/firestore';
+import { collection, query, where, getDoc, getDocs, addDoc, Timestamp } from 'firebase/firestore';
 
 export type SignupForm = {
   name: string;
@@ -37,7 +37,14 @@ export class UserMethods {
         };
       }
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      await addDoc(usersRef, { name, email, phone, pets: [], items: [] });
+      await addDoc(usersRef, {
+        name,
+        email,
+        phone,
+        pets: [],
+        items: [],
+        created_at: Timestamp.now(),
+      });
       return {
         message: 'user created',
       };
