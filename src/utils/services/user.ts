@@ -16,6 +16,7 @@ export type UserDocumentData = {
   phone: string;
   pets: string[];
   items: string[];
+  error?: string;
 };
 
 export class UserMethods {
@@ -53,7 +54,7 @@ export class UserMethods {
   }: {
     email: string;
     password: string;
-  }): Promise<UserDocumentData | { error: string }> {
+  }): Promise<{ result?: UserDocumentData; error?: string }> {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
 
@@ -76,7 +77,9 @@ export class UserMethods {
         userData = data;
       });
 
-      return userData;
+      return {
+        result: userData,
+      };
     } catch (error) {
       console.warn(error);
       return {
@@ -91,6 +94,32 @@ export class UserMethods {
       return { message: 'logout successfully' };
     } catch (error) {
       return { error: 'logout failed' };
+    }
+  }
+
+  static async getUserData(email: string): Promise<{ result?: UserDocumentData; error?: string }> {
+    try {
+      const usersRef = collection(firebaseDb, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshots = await getDocs(q);
+      if (querySnapshots.empty) {
+        return {
+          error: 'user does not exist',
+        };
+      }
+      let userData = {} as UserDocumentData;
+      querySnapshots.forEach(doc => {
+        const data = { ...doc.data(), id: doc.id } as UserDocumentData;
+        userData = data;
+      });
+
+      return {
+        result: userData,
+      };
+    } catch (error) {
+      return {
+        error: 'something went wrong',
+      };
     }
   }
 }

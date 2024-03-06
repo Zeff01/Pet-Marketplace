@@ -1,13 +1,20 @@
 import { Text, View, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+
 import { Image } from 'expo-image';
 import Input from '@components/Input';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { DrawerParamList } from '@navigator';
+
+import { useUserData } from '../../hooks/useUserData';
+import { UserMethods } from '@utils/services/user';
 
 // TODO: use form  library?
 export default function Login() {
+  const navigation = useNavigation();
   const dimension = Dimensions.get('screen');
   const { colors } = useGlobalTheme();
 
@@ -18,11 +25,19 @@ export default function Login() {
   // TODO: integrate firebase  login
   async function loginUser() {
     setLoading(true);
-    await new Promise(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000),
-    );
+    const { result, error } = await UserMethods.signin({ email: user, password });
+    if (error) {
+      alert(error);
+      setLoading(false);
+      return;
+    }
+    if (result) {
+      alert('logged in successfully!'); //TODO: make it look good
+      setLoading(false);
+      const parentNav: NavigationProp<DrawerParamList> = navigation.getParent();
+      parentNav.navigate('FrontPage'); // redirect top front page
+      return;
+    }
   }
 
   const submitDisabled = loading || user.length === 0 || password.length === 0;
@@ -46,7 +61,7 @@ export default function Login() {
         </View>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', rowGap: 15 }}>
           <View style={{ rowGap: 5 }}>
-            <Text style={{ fontSize: 16, color: colors.foreground }}>user phone number</Text>
+            <Text style={{ fontSize: 16, color: colors.foreground }}>email</Text>
             <Input
               loading={loading}
               value={user}
