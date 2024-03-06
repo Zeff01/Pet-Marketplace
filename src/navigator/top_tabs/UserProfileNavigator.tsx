@@ -2,6 +2,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { Text } from 'react-native';
 
+import UserProfilePets from '@views/UserProfilePets';
+import UserProfileItems from '@views/UserProfileItems';
+
 export type UserProfileTopTabParamList = {
   UserPets: undefined;
   UserItems: undefined;
@@ -28,7 +31,7 @@ export default function UserProfileNavigator() {
       }}>
       <TopTab.Screen
         name="UserPets"
-        component={Temp}
+        component={UserProfilePets}
         options={{
           tabBarLabel: () => (
             <Text style={{ color: colors.foreground, bottom: 9, fontWeight: '500' }}>Pets</Text>
@@ -37,7 +40,7 @@ export default function UserProfileNavigator() {
       />
       <TopTab.Screen
         name="UserItems"
-        component={Temp}
+        component={UserProfileItems}
         options={{
           tabBarLabel: () => (
             <Text style={{ color: colors.foreground, bottom: 9, fontWeight: '500' }}>Items</Text>
@@ -46,8 +49,4 @@ export default function UserProfileNavigator() {
       />
     </TopTab.Navigator>
   );
-}
-
-function Temp() {
-  return <></>;
 }
