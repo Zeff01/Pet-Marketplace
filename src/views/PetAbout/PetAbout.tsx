@@ -2,7 +2,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { View, Text } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { faker } from '@faker-js/faker';
 
 const fakeDescription = faker.lorem.sentences({ min: 2, max: 6 });

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';

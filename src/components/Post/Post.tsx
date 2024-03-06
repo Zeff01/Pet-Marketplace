@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Image, Pressable } from 'react-native';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { PostFeeds } from '@utils/models/PostFeed';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '@navigator';
 

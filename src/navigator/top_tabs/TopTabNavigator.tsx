@@ -2,7 +2,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Entypo, Ionicons, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 import Main from '@views/Main';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import UserProfile from '@views/UserProfile';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 const TopTab = createMaterialTopTabNavigator();
 
 /**
@@ -70,7 +71,7 @@ export default function TopTabNavigator() {
       />
       <TopTab.Screen
         name="Profile"
-        component={TemperoryComponent}
+        component={UserProfile}
         options={{
           tabBarIcon: props => {
             const iconColor = props.focused ? colors.primary : colors.foreground;

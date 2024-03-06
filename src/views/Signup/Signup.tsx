@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect, useReducer } from 'react';
 import { reducer, initialValue } from './formStates';
 import { ActionType } from './formState.types';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import {

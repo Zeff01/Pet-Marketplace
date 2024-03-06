@@ -9,7 +9,7 @@ export const fonts = {
     bold: 'openSans_bold',
     boldItalic: 'openSans_bold_italic',
   },
-};
+} as const;
 
 // preload fonts
 export const loadFonts = () =>

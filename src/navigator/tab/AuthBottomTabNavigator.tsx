@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 
 import Login from '@views/Login';
 import Signup from '@views/Signup';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 
 const Tab = createBottomTabNavigator<AuthTabParamList>();
 
