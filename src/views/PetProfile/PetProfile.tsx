@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '@navigator';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import PetProfileNavigator from '@navigator/top_tabs/PetProfileNavigator';
 
 export default function PetProfile() {

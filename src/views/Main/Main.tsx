@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker'; // for temporary data;
 import Post from '@components/Post/Post';
 import { COLORS } from '@theme';
 import { PostFeedContext } from '../../providers/PostFeedsProvider';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 
 const fakeData = Array.from({ length: 10 }, () => {
   const name = faker.person;

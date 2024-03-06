@@ -10,7 +10,7 @@ import { RootStackParamList } from './Stack.typeDefs';
 import TopTabNavigator from '@navigator/top_tabs/TopTabNavigator';
 import PetProfile from '@views/PetProfile';
 import Search from '@views/Search';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { useNavigation } from '@react-navigation/native';
 import Input from '@components/Input';
 

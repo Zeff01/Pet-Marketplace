@@ -6,7 +6,7 @@ import Input from '@components/Input';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { DrawerParamList } from '@navigator';
 
 import { useUserData } from '../../hooks/useUserData';

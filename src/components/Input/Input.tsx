@@ -1,5 +1,5 @@
 import { TextStyle, StyleSheet, ColorValue, TextInputProps, TextInput } from 'react-native';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 
 type InputProps = {
   loading?: boolean; // makes input uneditable and adjust opacity

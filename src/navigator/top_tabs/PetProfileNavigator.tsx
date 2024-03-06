@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { Text } from 'react-native';
 import PetAbout from '@views/PetAbout';
 import PetMedicalRecord from '@views/PetMedicalRecord';

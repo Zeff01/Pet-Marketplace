@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native';
-import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useGlobalTheme } from '@hooks/useGlobalTheme';
 import { Ionicons } from '@expo/vector-icons';
 import { faker } from '@faker-js/faker';
 

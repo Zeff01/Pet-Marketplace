@@ -1,13 +1,15 @@
 import { COLORS } from '../theme/colors';
+import { fonts } from '@theme';
 import { useContext, createContext, ReactNode, useState, useEffect } from 'react';
 
 type ThemeValueTypes = {
   currentTheme: 'light' | 'dark';
   switchTheme(): void;
   colors: (typeof COLORS)['Light Mode'] | (typeof COLORS)['Dark Mode'];
+  fonts: typeof fonts;
 };
 
-const ThemeContext = createContext<null | ThemeValueTypes>(null);
+export const ThemeContext = createContext<null | ThemeValueTypes>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('dark');
@@ -29,16 +31,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         currentTheme,
         switchTheme,
         colors,
+        fonts,
       }}>
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useGlobalTheme() {
-  const theme = useContext(ThemeContext);
-  if (!theme) {
-    throw new Error('invalid theme');
-  }
-  return theme;
 }
