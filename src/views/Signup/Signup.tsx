@@ -14,6 +14,7 @@ import { useState, useEffect, useReducer } from 'react';
 import { reducer, initialValue } from './formStates';
 import { ActionType } from './formState.types';
 import { useGlobalTheme } from '../../providers/ThemeProvider';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import {
   nameSchema,
@@ -26,11 +27,31 @@ import {
   validateInput,
 } from './validationSchema';
 
+import { UserMethods } from '@utils/services/user';
+import { AuthTabParamList } from '@navigator';
+
 export default function Signup() {
+  const navigation = useNavigation<NavigationProp<AuthTabParamList>>();
   const dimension = Dimensions.get('screen');
   const { colors } = useGlobalTheme();
   // NOTE: this is cancer code, replace later use a form library or useReducer
   const [loading, setLoading] = useState(false);
+
+  async function signupUser() {
+    setLoading(true);
+    const result = await UserMethods.signup({ name, email, password, phone });
+    if (result.error) {
+      alert(result.error); // TODO: make it more elegant
+      setLoading(false);
+      return;
+    }
+    alert('signup success!, redirecting to login page');
+    setTimeout(() => {
+      // delays for 2 second
+      navigation.navigate('Login');
+    }, 2000);
+    setLoading(false);
+  }
 
   const [
     {
@@ -51,16 +72,6 @@ export default function Signup() {
     },
     dispatch,
   ] = useReducer(reducer, initialValue);
-
-  // TODO: integrate firebase  login
-  async function loginUser() {
-    setLoading(true);
-    await new Promise(() =>
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000),
-    );
-  }
 
   useEffect(() => {
     validateInput(nameSchema, name, dispatch, ActionType.checkName);
@@ -245,7 +256,7 @@ export default function Signup() {
               height: 30,
               marginBottom: 20,
             }}
-            onPress={loginUser}>
+            onPress={signupUser}>
             {loading ? (
               <ActivityIndicator animating={true} color={colors.secondary} />
             ) : (

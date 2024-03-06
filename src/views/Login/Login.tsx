@@ -51,8 +51,8 @@ export default function Login() {
               loading={loading}
               value={user}
               onChangeText={setUser}
-              keyboardType="phone-pad"
-              placeholder="phone number"
+              keyboardType="email-address"
+              placeholder="email"
             />
           </View>
           <View style={{ rowGap: 5 }}>
